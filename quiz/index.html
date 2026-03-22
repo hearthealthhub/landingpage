@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BP Risk Assessment Quiz | Maryam Bamidele Wellness</title>
+  
+  <!-- Font CDN links -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+            poppins: ['Poppins', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-[#F8F9FA] text-[#1A1A1A] font-inter min-h-screen flex flex-col">
+  
+  <!-- SECTION: Progress Header -->
+  <header class="bg-white border-b border-[#E5E7EB]">
+    <div class="max-w-4xl mx-auto flex items-center justify-between px-4 py-4">
+      <!-- Left: Back Arrow -->
+      <a href="../index.html" class="text-[#6B7280] text-sm hover:text-[#1A1A1A] transition-colors">
+        &larr; Back
+      </a>
+      
+      <!-- Centre: Progress Bar -->
+      <div class="flex-1 mx-6 max-w-sm">
+        <div class="w-full h-1.5 rounded-full bg-[#E5E7EB] overflow-hidden">
+          <div id="progress-fill" class="h-full rounded-full bg-[#2D6A4F] w-0 transition-all duration-300"></div>
+        </div>
+      </div>
+      
+      <!-- Right: Counter (Hidden initially during state-gate) -->
+      <div class="hidden">
+        <span id="q-counter" class="text-[#6B7280] text-sm">1 / 8</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow flex flex-col">
+    <!-- STATE A: DATA GATE -->
+    <div id="state-gate" class="py-16 px-4 w-full max-w-lg mx-auto flex-grow flex flex-col justify-center">
+      <div class="text-center md:text-left mb-8">
+        <p class="text-[#B5860D] font-poppins font-semibold text-sm uppercase tracking-wider mb-4">
+          Step 1 of 2 — Your Details
+        </p>
+        <h2 class="text-[#1A1A1A] font-poppins font-bold text-2xl mb-3">
+          Where Should We Send Your Results?
+        </h2>
+        <p class="text-[#6B7280] font-inter text-base">
+          Enter your details below so Maryam can send your personalised BP risk results directly to you — even if you don't complete the full assessment.
+        </p>
+      </div>
+
+      <form id="gate-form" class="bg-white p-6 md:p-8 rounded-2xl border border-[#E5E7EB] shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+        <div class="mb-4">
+          <label for="input-name" class="block text-[#1A1A1A] font-poppins font-semibold text-sm mb-2">Your First Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Chioma" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-base focus:ring-2 focus:ring-[#2D6A4F] focus:outline-none transition-all">
+        </div>
+        
+        <div class="mb-6">
+          <label for="input-whatsapp" class="block text-[#1A1A1A] font-poppins font-semibold text-sm mb-2">Your WhatsApp Number</label>
+          <input type="tel" id="input-whatsapp" placeholder="e.g. 08012345678" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-base focus:ring-2 focus:ring-[#2D6A4F] focus:outline-none transition-all">
+        </div>
+        
+        <button type="button" id="btn-gate-submit" class="w-full bg-[#2D6A4F] text-white py-4 px-8 rounded-xl font-poppins font-bold text-base shadow-[0_4px_14px_rgba(45,106,79,0.4)] hover:bg-[#1B4332] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#2D6A4F]">
+          Get My Results &rarr;
+        </button>
+        
+        <p id="gate-error" class="hidden text-red-500 font-inter text-sm mt-3 text-center">
+          Please enter your name and a valid WhatsApp number to continue.
+        </p>
+      </form>
+      
+      <p class="text-[#6B7280] font-inter text-xs text-center mt-6">
+        🔒 Your details are private and will only be used to send your results.
+      </p>
+    </div>
+
+    <!-- STATE B: QUIZ -->
+    <!-- Content injected via quiz.js -->
+    <div id="state-quiz" class="hidden py-8 px-4 w-full flex-grow flex flex-col"></div>
+
+    <!-- STATE C: LOADING SCREEN -->
+    <div id="state-loading" class="hidden flex-grow flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
+      <div class="w-12 h-12 border-4 border-[#2D6A4F] border-t-transparent rounded-full animate-spin mx-auto"></div>
+      <h2 class="text-[#1A1A1A] font-poppins font-semibold text-xl mt-6">Calculating your results...</h2>
+      <p class="text-[#6B7280] font-inter text-base mt-2">Maryam is preparing your personalised BP risk assessment.</p>
+    </div>
+  </main>
+
+  <!-- SECTION: Footer -->
+  <footer class="bg-[#1A1A1A] py-8 px-4 mt-auto">
+    <div class="max-w-2xl mx-auto flex flex-col items-center">
+      <!-- Disclaimer Block -->
+      <div class="disclaimer-block bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg p-4 text-xs text-[#6B7280] text-center w-full">
+        ⚠️ This assessment is for informational purposes only.
+        It is not a medical diagnosis. The Forever Living Heart Health
+        Pack is a natural nutritional supplement — not a replacement
+        for prescribed medical treatment. Always consult your doctor.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.min.js"></script>
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/quiz.js"></script>
+</body>
+</html>

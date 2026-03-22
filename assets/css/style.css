@@ -1,0 +1,22 @@
+/* assets/css/style.css — Custom styles and overrides */
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600;700;800&display=swap');
+
+/* Font utilities (in case Tailwind CDN needs help) */
+.font-inter {
+  font-family: 'Inter', sans-serif;
+}
+
+.font-poppins {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Custom Animations that cannot be done with standard Tailwind utility classes */
+@keyframes fillMeter {
+  from { width: 0%; }
+}
+
+.animate-meter {
+  animation: fillMeter 1.2s ease-out forwards;
+}
