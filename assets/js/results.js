@@ -66,6 +66,15 @@ function setupCityCapture() {
       } catch (e) {
         console.error('Failed to update city', e);
       }
+
+      if (window.HHTracking) {
+        window.HHTracking.pushEvent('select_city', {
+          lead_id: window._leadId,
+          city,
+          result_type: sessionStorage.getItem('bp_lead_score') || '',
+          ...window.HHTracking.getAttribution()
+        });
+      }
       
       // Keep selected state and update text
       window._city = city;

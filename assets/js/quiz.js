@@ -121,6 +121,13 @@ async function handleGateSubmit() {
     
     leadId = result.leadId;
     leadName = name;
+
+    if (window.HHTracking) {
+      window.HHTracking.pushEvent('submit_gate_form', {
+        lead_id: leadId,
+        ...window.HHTracking.getAttribution()
+      });
+    }
     
     // Switch state from gate to quiz
     document.getElementById('state-gate').classList.add('hidden');
@@ -227,6 +234,14 @@ async function processResults() {
   
   try {
     await updateLeadScore(leadId, score, answers);
+
+    if (window.HHTracking) {
+      window.HHTracking.pushEvent('complete_quiz', {
+        lead_id: leadId,
+        result_type: score,
+        ...window.HHTracking.getAttribution()
+      });
+    }
     
     // Follow the updated GEMINI.md sessionStorage contract
     sessionStorage.setItem('bp_lead_id', leadId);

@@ -7,13 +7,29 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+function getTrackingContext() {
+  if (window.HHTracking && typeof window.HHTracking.getAttribution === 'function') {
+    return window.HHTracking.getAttribution();
+  }
+  return {};
+}
+
 // FUNCTION 1: Insert lead at data gate (before quiz)
 // Returns: { leadId: string } | { error: string }
 async function insertLead(name, whatsapp, source = 'organic') {
   try {
+    const tracking = getTrackingContext();
+    const leadPayload = {
+      name,
+      whatsapp,
+      source,
+      ...tracking,
+      quiz_started_at: new Date().toISOString()
+    };
+
     const { data, error } = await supabase
       .from('leads')
-      .insert([{ name, whatsapp, source }])
+      .insert([leadPayload])
       .select('id')
       .single();
       
@@ -31,7 +47,7 @@ async function updateLeadScore(leadId, score, answers) {
   try {
     const { error } = await supabase
       .from('leads')
-      .update({ score, answers })
+      .update({ score, answers, quiz_completed_at: new Date().toISOString(), result_viewed_at: new Date().toISOString() })
       .eq('id', leadId);
       
     if (error) throw error;
@@ -48,7 +64,7 @@ async function updateLeadCity(leadId, city) {
   try {
     const { error } = await supabase
       .from('leads')
-      .update({ city })
+      .update({ city, city_selected_at: new Date().toISOString() })
       .eq('id', leadId);
       
     if (error) throw error;
@@ -65,7 +81,7 @@ async function markLeadConverted(leadId) {
   try {
     const { error } = await supabase
       .from('leads')
-      .update({ converted: true })
+      .update({ converted: true, whatsapp_clicked_at: new Date().toISOString() })
       .eq('id', leadId);
       
     if (error) throw error;

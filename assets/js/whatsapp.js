@@ -49,6 +49,15 @@ async function handleWhatsAppClick(e) {
     console.error('Failed to log conversion via Supabase', error);
   }
 
+  if (window.HHTracking) {
+    window.HHTracking.pushEvent('click_whatsapp', {
+      lead_id: leadId,
+      result_type: score,
+      city,
+      ...window.HHTracking.getAttribution()
+    });
+  }
+
   // Build URL and open in new tab
   const url = buildWhatsAppURL(name, score, city);
   window.open(url, '_blank');
